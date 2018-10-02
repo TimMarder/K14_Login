@@ -1,4 +1,5 @@
 # Polish-Israeli Coding Confederacy
+# Tim Marder & Damian Wasilewicz
 # SoftDev1 pd06
 # K #14: Do I Know You?
 # 2018-10-01
@@ -14,15 +15,15 @@ import os
 
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32)
-
+app.secret_key = os.urandom(32) #sets secret key to 32 bits of
+                                #random data as a string
 
 #determines whether or not user is currently logged in by checking if the session
 # "dictionary" has a key with appropriate username; displays welcome page if logged in,
 #sends user to home to sign in if user isn't logged in
 @app.route("/")
 def home():
-    if request.cookies.get('username'):
+    if (session.get('username') == "timian"):
         return render_template("welcome.html",
                                 user = "timian")
     else:
@@ -32,14 +33,17 @@ def home():
 #removes user from session, logging them out
 @app.route("/logout")
 def log_out():
-    session.pop('username')
-    return redirect(url_for("home"))
+    try:                                    # If page is open in two tabs and
+        session.pop('username')             # logout is attempted on both, this
+        return return_template("home.html") # prevents a crash
+    except:
+        return render_template("home.html")
 
 
 #home page; determines whether input information is correct
 #and returns welcome page if login successful, home page if not
 #error page includes hint as to which part of login combo was wrong
-@app.route("/auth", methods = ["GET", "POST"])
+@app.route("/auth", methods = ["POST"])
 def authenticate():
     if ((request.form['username'] == "timian") &
         (request.form['password'] == "wasilarder")):
