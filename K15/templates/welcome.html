@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends "home.html" %}
+<html>
+
+  <head>
+      {% block title %}<title> Login Successful </title>{% endblock %}
+  </head>
+
+  {% block content %}
+  <body>
+      <center>
+        <br>
+        <br>
+      <h1>
+        Thank you for logging in, {{ user }}!
+      </h1>
+        You can leave the website and come back.
+        You will still be logged in!
+        <br>
+        <a href = "/logout">Log Out</a> if you don't want that
+      </center>
+  </body>
+  {% endblock %}
+
+</html>
